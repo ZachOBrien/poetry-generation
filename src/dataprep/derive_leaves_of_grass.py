@@ -16,7 +16,7 @@ all_poems = []
 for book_title, book_content in books:
     poems = split_into_poems(book_content)
     for poem_title, poem_content in poems:
-        all_poems.append((book_title[:-1], poem_title[:-1], "".join(poem_content)))
+        all_poems.append((book_title.strip(), poem_title.strip(), ("".join(poem_content)).strip()))
 
 df = pd.DataFrame(all_poems, columns=["book_title", "poem_title", "poem"])
 df.to_csv("../../data/leaves_of_grass.csv")
