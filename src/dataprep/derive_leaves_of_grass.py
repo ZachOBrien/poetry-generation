@@ -5,7 +5,7 @@ Derive cleaned leaves of grass data
 
 import pandas as pd
 
-from parse_leaves_of_grass import split_into_poems, split_into_books
+from dataprep.parse_leaves_of_grass import split_into_poems, split_into_books
 
 with open("../../data/leaves-of-grass.txt") as f:
     lines = f.readlines()

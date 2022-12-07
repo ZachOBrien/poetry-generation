@@ -6,7 +6,7 @@ Derive word embeddings
 import pandas as pd
 from gensim.models.word2vec import Word2Vec
 
-from leaves_of_grass_tokenize import tokenize_poem
+from dataprep.leaves_of_grass_tokenize import tokenize_poem
 
 
 # Hyperparameters for the Word2Vec model

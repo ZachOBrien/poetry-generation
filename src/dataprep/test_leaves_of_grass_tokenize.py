@@ -3,7 +3,7 @@ Unit tests for the leaves_of_grass_tokenize module
 
 """
 
-from leaves_of_grass_tokenize import tokenize_poem
+from dataprep.leaves_of_grass_tokenize import tokenize_poem
 
 
 class TestTokenizePoem:

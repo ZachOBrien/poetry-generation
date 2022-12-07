@@ -5,7 +5,7 @@ Functionality for parsing Project Gutenberg's copy of "Leaves of Grass", by Walt
 
 import itertools
 
-from list_utils import (
+from dataprep.list_utils import (
     remove_leading_and_trailing,
     split_into_blocks
 )

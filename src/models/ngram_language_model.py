@@ -8,6 +8,8 @@ import random
 from nltk.util import ngrams
 import numpy as np
 
+from dataprep.leaves_of_grass_tokenize import tokenize_poem
+
 
 class LanguageModel:
     UNK = "<UNK>"

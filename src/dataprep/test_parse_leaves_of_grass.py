@@ -5,7 +5,7 @@ Unit tests for the `parse_leaves_of_grass` module
 """
 
 
-from parse_leaves_of_grass import (
+from dataprep.parse_leaves_of_grass import (
     is_book_title,
     is_poem_title,
     read_poem_body,

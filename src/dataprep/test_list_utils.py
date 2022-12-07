@@ -5,7 +5,7 @@ Unit tests for the `list_utils` module
 
 import itertools
 
-from list_utils import (
+from dataprep.list_utils import (
     remove_leading_and_trailing,
     split_into_blocks
 )
