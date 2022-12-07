@@ -1,6 +1,7 @@
 """
 This module implements a basic n-gram language model
 
+The implementation was adapted from my homework 2 submission.
 """
 
 import random
