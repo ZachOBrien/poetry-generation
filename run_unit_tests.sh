@@ -1,1 +1,1 @@
-pytest src/
+pytest test/
