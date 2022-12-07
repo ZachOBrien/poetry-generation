@@ -111,7 +111,7 @@ class LanguageModel:
                 sentence += self.POEM_END * max(1, (self.n - 1))
                 return sentence
             else:
-                sentence += predicted_token
+                sentence += (" " + predicted_token)
                 if self.n > 1:
                     current_prefix = current_prefix[1:] + (predicted_token,)
 
