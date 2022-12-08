@@ -6,7 +6,7 @@ Derive word embeddings
 import pandas as pd
 from gensim.models.word2vec import Word2Vec
 
-from dataprep.leaves_of_grass_tokenize import tokenize_poem
+from dataprep.preprocessing import tokenize_poem
 
 
 # Hyperparameters for the Word2Vec model
@@ -16,7 +16,7 @@ TYPE_FREQUENCY_THRESHOLD = 5
 WORKERS = 4
 SG = 1
 
-leaves_of_grass_df = pd.read_csv("../../data/leaves_of_grass.csv")
+leaves_of_grass_df = pd.read_csv("../data/leaves_of_grass.csv")
 
 tokenized_poems = list(tokenize_poem(poem) for poem in leaves_of_grass_df["poem"])
 
@@ -29,4 +29,4 @@ word2vec_model = Word2Vec(
     sg=SG
 )
 
-word2vec_model.wv.save_word2vec_format("embeddings.bin", binary=True)
+word2vec_model.wv.save_word2vec_format("../data/embeddings.bin", binary=True)

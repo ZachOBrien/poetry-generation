@@ -7,7 +7,7 @@ import pandas as pd
 
 from dataprep.parse_leaves_of_grass import split_into_poems, split_into_books
 
-with open("../../data/leaves-of-grass.txt") as f:
+with open("../data/leaves-of-grass.txt") as f:
     lines = f.readlines()
 
 books = split_into_books(lines)
@@ -19,4 +19,4 @@ for book_title, book_content in books:
         all_poems.append((book_title.strip(), poem_title.strip(), ("".join(poem_content)).strip()))
 
 df = pd.DataFrame(all_poems, columns=["book_title", "poem_title", "poem"])
-df.to_csv("../../data/leaves_of_grass.csv")
+df.to_csv("../data/leaves_of_grass.csv")
