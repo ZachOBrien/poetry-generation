@@ -5,6 +5,8 @@ Functionality for parsing Project Gutenberg's copy of "Leaves of Grass", by Walt
 
 import itertools
 
+import pandas as pd
+
 from dataprep.list_utils import (
     remove_leading_and_trailing,
     split_into_blocks
@@ -88,4 +90,19 @@ def split_into_books(lines):
                                      with its number/name and lines of text
     """                              
     return split_into_blocks(lines, is_book_title, read_book_body)
-        
+
+
+def leaves_of_grass_gutenberg_to_df(lines):
+    """Convert a leaves of grass copy from Project Gutenberg into a DataFrame of poems
+
+    Args:
+        lines (list[str]): Lines from the Project Gutenberg .txt file
+    """
+    books = split_into_books(lines)
+    all_poems = []
+    for book_title, book_content in books:
+        poems = split_into_poems(book_content)
+        for poem_title, poem_content in poems:
+            all_poems.append((book_title.strip(), poem_title.strip(), ("".join(poem_content)).strip()))
+    return pd.DataFrame(all_poems, columns=["book_title", "poem_title", "poem"])
+            
