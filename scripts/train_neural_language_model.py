@@ -74,14 +74,14 @@ validation_dataset = timeseries_dataset_from_array(
 # and Dropout layers to help reduce overfitting
 model = build_character_lstm_model(
     vocab_size=vectorizer.vocab_size(),
-    hidden_layers=[LSTM(1, return_sequences=True),
+    hidden_layers=[LSTM(256, return_sequences=True),
                    Dropout(0.3),
-                   LSTM(1),
+                   LSTM(256),
                    Dropout(0.3)],
     lr=0.01)
 
 # Train the model
-history = model.fit(train_dataset, epochs=1)
+history = model.fit(train_dataset, epochs=20)
 
 # Save the model, the training metrics every epoch, and the vectorizer (necessary for inference)
 model.save("character_based_lm")  # Save in TensorFlow's new SavedModel format
