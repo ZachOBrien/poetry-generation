@@ -20,9 +20,11 @@ from dataprep.neural_lm_preprocessing import (
 from models.neural_language_models import build_character_lstm_model
 
 
+print("Loading data from disk...")
 # Load the poems from disk
 leaves_of_grass_df = pd.read_csv("../data/leaves_of_grass.csv")
 
+print("Preprocessing data...")
 # Pull only the poems out of the dataset
 poems = list(leaves_of_grass_df["poem"])
 poems = [preprocess_for_neural_lm(poem) for poem in poems]
@@ -48,6 +50,9 @@ train_set = np.array(list(itertools.chain(*train_set)))
 validation_set = vectorized_poems[train_set_size:(train_set_size + validation_set_size)]
 validation_set = np.array(list(itertools.chain(*validation_set)))
 
+test_set = vectorized_poems[train_set_size+validation_set_size:]
+test_set = np.array(list(itertools.chain(*test_set)))
+
 # Each sample given to the model for training will be a sequence of 100 characters
 SEQUENCE_LENGTH = 100
 # I do not want to skip any samples, so sampling rate is 1
@@ -55,6 +60,7 @@ SAMPLING_RATE = 1
 BATCH_SIZE = 4096
 
 
+print("Building train and validation datasets...")
 # Build timeseries datasets using Keras helpers
 train_dataset = timeseries_dataset_from_array(
     data=train_set[:-SEQUENCE_LENGTH],
@@ -80,8 +86,9 @@ model = build_character_lstm_model(
                    Dropout(0.3)],
     lr=0.01)
 
+print("Training model...")
 # Train the model
-history = model.fit(train_dataset, epochs=20)
+history = model.fit(train_dataset, epochs=30, validation_data=validation_dataset)
 
 # Save the model, the training metrics every epoch, and the vectorizer (necessary for inference)
 model.save("character_based_lm")  # Save in TensorFlow's new SavedModel format
