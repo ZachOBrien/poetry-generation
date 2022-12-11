@@ -9,7 +9,7 @@ import random
 from nltk.util import ngrams
 import numpy as np
 
-from dataprep.preprocessing import tokenize_poem
+from dataprep.ngram_lm_preprocessing import preprocess_for_ngram_lm
 
 
 class LanguageModel:

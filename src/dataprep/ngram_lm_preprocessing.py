@@ -6,7 +6,7 @@ Functionality for preprocessing data to be used in n-gram language models
 from nltk.tokenize import word_tokenize
 
 
-def tokenize_poem(poem, newline_sym="<nl>"):
+def preprocess_for_ngram_lm(poem, newline_sym="<nl>"):
     """Convert a poem into tokens ready to be given to an `n`-gram language model
 
     Args:
