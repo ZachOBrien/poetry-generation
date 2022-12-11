@@ -55,7 +55,7 @@ class LanguageModel:
         )
 
     def score(self, tokens):
-        """Calculates the probability score for a given string representing a single sentence.
+        """Calculates the probability score for a given string representing a single poem.
 
         Parameters:
           tokens (list[str]): A sequence of tokens
@@ -98,23 +98,23 @@ class LanguageModel:
         with np.errstate(divide="ignore"):
             return np.log(ngram_freq / ngram_prefix_freq)
 
-    def generate_sentence(self):
-        """Generates a single sentence from a trained language model using the Shannon technique.
+    def generate_poem(self):
+        """Generates a single poem from a trained language model using the Shannon technique.
 
         Returns:
-          str: the generated sentence
+          str: the generated poem
         """
-        sentence = "<p>" * max(1, (self.n - 1))
+        poem = "<p>" * max(1, (self.n - 1))
         current_prefix = tuple(
             [self.POEM_BEGIN for _ in range((self.n - 1))]
         )
         while True:
             predicted_token = self.sample_token_given_prefix(current_prefix)
             if predicted_token == self.POEM_END:
-                sentence += self.POEM_END * max(1, (self.n - 1))
-                return sentence
+                poem += self.POEM_END * max(1, (self.n - 1))
+                return poem
             else:
-                sentence += (" " + predicted_token)
+                poem += (" " + predicted_token)
                 if self.n > 1:
                     current_prefix = current_prefix[1:] + (predicted_token,)
 
@@ -173,14 +173,14 @@ class LanguageModel:
         )
 
     def generate(self, n):
-        """Generates n sentences from a trained language model using the Shannon technique.
+        """Generates n poems from a trained language model using the Shannon technique.
         Parameters:
-          n (int): the number of sentences to generate
+          n (int): the number of poems to generate
 
         Returns:
-          list: a list containing strings, one per generated sentence
+          list[str]: A list of poems
         """
-        return [self.generate_sentence() for _ in range(n)]
+        return [self.generate_poem() for _ in range(n)]
 
 
 def replace_infrequent_tokens(
