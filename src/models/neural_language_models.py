@@ -5,49 +5,39 @@ The implementation was adapted from my homework 4 submission.
 """
 
 import numpy as np
+import keras
 from keras.models import Sequential
 from keras.layers import Dense, LSTM, Dropout
-from keras.optimizers import SGD
+from keras.optimizers import SGD, Adam 
+from keras.metrics import CategoricalAccuracy
 from keras.utils import to_categorical
 
 
-def build_feedforward_model(output_dim, nodes_per_hidden_layer, lr):
-    """Build a feedforward neural network
+def build_character_lstm_model(vocab_size, layers, lr):
+    """Build a character-based LSTM neural language model
+
+    A character-based model predicts the next character in a sequence of characters.
+    The model accepts batches of inputs of shape (batch_size, Any, vocab_size). `Any`
+    here indicates that a single sequence can be arbitrary length. In the context
+    of this project, that is important because poems are arbitrary in length.
 
     Args:
-        output_dim (int): Number of nodes in the output layer
-        nodes_per_hidden_layer (list[int]): Each element in the list is the number of nodes in that hidden layer
-        lr (float): Learning rate
+        vocab_size (PositiveInteger):
+            The size of the vocabulary
+        layers (list[PositiveInteger]):
+            A list of number of nodes in each LSTM layer
+        lr (float): 
+            Learning rate
 
     Returns:
-        keras.Sequential: A Keras Sequential feedforward neural network
+        keras.Sequential: A Keras Sequential neural network which uses an LSTM layer.
     """
     model = Sequential()
-    for node_count in nodes_per_hidden_layer:
-        model.add(Dense(node_count), activation="relu")
-    model.add(Dense(output_dim, activation="softmax", name="output"))
-    model.compile(loss="categorical_crossentropy", optimizer=SGD(learning_rate=lr))
+    model.add(keras.Input(shape=(None, vocab_size)))  # `None` indicates the sequence is of arbitrary length
+    model.add(LSTM(64))
+    model.add(Dropout(0.3))
+    model.add(Dense(vocab_size, activation="softmax"))
+    model.compile(loss="categorical_crossentropy", optimizer=Adam(learning_rate=lr))
+    model.build()
     return model
 
-
-def data_generator(X, y, batch_size, num_classes):
-    """Build a data generator which produces inputs and labels
-
-    Args:
-        X (2d NumPy Array): A matrix of samples, where each row is an input
-        y (1d NumPy Array): An array of labels which correspond to the samples in X
-        batch_size (int): Number of samples to yield in one batch
-        num_classes (int): The number of classes, because `y` is a categorical label
-
-    Yields:
-        tuple[2d NumPy Array, 1d NumPy Array]: A batch of inputs and labels
-    """
-    batch_index = 0
-    max_batches = len(y) / batch_size
-    while batch_index < max_batches:
-        offset = batch_index * batch_size
-        yield (X[offset:offset + batch_size],
-               np.array(to_categorical(
-                   y=y[offset:offset + batch_size],
-                   num_classes=num_classes)))
-        batch_index += 1
