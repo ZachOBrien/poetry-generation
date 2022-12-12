@@ -6,6 +6,19 @@ Zach O'Brien
 
 Fall 2022
 
+## Project Structure
+
+**The main submission is `FINAL-PROJECT-DELIVERABLE.ipynb`.**
+
+| Name | Purpose |
+| ---- | ------- |
+| data/ | Directory which holds raw base data, and intermediate derived datasets to use for model training. |
+| scripts/ | Scripts to run steps in the processing pipeline like extracting poems from raw data or train a model. These are largely duplicated into `FINAL-PROJECT-DELIVERABLE.ipynb` so that the project can be completely re-created from that Jupyter Notebook. |
+| src/ | Reusable code which is shared among `scripts/`, `test/`, and `FINAL-PROJECT-DELIVERABLE.ipynb` |
+| test/ | Unit tests for code in `src/` |
+| FINAL-PROJECT-DELIVERABLE.ipynb | A jupyter notebook which presents the project's work and final product. It can be run to reproduce the entire project from only the raw data file. |
+| requirements.txt | External packages required by code in this project |
+
 ## Set up Environment
 
 This project's dependencies are specified in a `requirements.txt` file, for use with Python's built-in `venv` virtual environment tool. 
