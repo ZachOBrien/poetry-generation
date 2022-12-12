@@ -1,80 +1,31 @@
 """
 Train an LSTM neural language model on character-tokenized poems
 
+REQUIRES:
+    - Training and validation datasets have already been derived.
+      Run ./build_character_sequence_datasets.py to create them.
 """
-import itertools
 import pickle
-import random
 import os
 os.environ["TF_CPP_MIN_LOG_LEVEL"] = "3"  # Suppress tensorflow debugging info
 
-import pandas as pd
-import numpy as np
-from keras.utils import timeseries_dataset_from_array
+import tensorflow as tf
 from keras.layers import LSTM, Dropout
-
-from dataprep.neural_lm_preprocessing import (
-    Vectorizer,
-    preprocess_for_neural_lm,
-)
 from models.neural_language_models import build_character_lstm_model
 
+VECTORIZER_PATH = "../data/vectorizer.pkl"
+TRAIN_DATASET_PATH = "../data/training_dataset_tensorflow"
+VALIDATION_DATASET_PATH = "../data/validation_dataset_tensorflow"
 
-print("Loading data from disk...")
-# Load the poems from disk
-leaves_of_grass_df = pd.read_csv("../data/leaves_of_grass.csv")
+print("Loading vectorizer...")
+with open(VECTORIZER_PATH, "rb") as infile:
+    vectorizer = pickle.load(infile)
 
-print("Preprocessing data...")
-# Pull only the poems out of the dataset
-poems = list(leaves_of_grass_df["poem"])
-poems = [preprocess_for_neural_lm(poem) for poem in poems]
+print("Loading training dataset...")
+train_dataset = tf.data.Dataset.load(TRAIN_DATASET_PATH, compression="GZIP")
 
-# Fit a vectorizer to the vocabulary of characters
-vectorizer = Vectorizer()
-vectorizer.fit(itertools.chain(*poems))
-# Vectorize all characters
-vectorized_poems = [vectorizer.tokens_to_vectors(poem) for poem in poems]
-
-# Randomly shuffle the poems before splitting into training and validation sets
-random.shuffle(vectorized_poems)
-
-# Use 70% of the data for training, and 15% for validation 
-# during testing, and 15% for final model evaluation
-train_set_size = int(0.8 * len(vectorized_poems))
-validation_set_size = int(0.15 * len(vectorized_poems))
-test_set_size = int(0.15 * len(vectorized_poems))
-
-train_set = vectorized_poems[:train_set_size]
-train_set = np.array(list(itertools.chain(*train_set)))
-
-validation_set = vectorized_poems[train_set_size:(train_set_size + validation_set_size)]
-validation_set = np.array(list(itertools.chain(*validation_set)))
-
-test_set = vectorized_poems[train_set_size+validation_set_size:]
-test_set = np.array(list(itertools.chain(*test_set)))
-
-# Each sample given to the model for training will be a sequence of 100 characters
-SEQUENCE_LENGTH = 100
-# I do not want to skip any samples, so sampling rate is 1
-SAMPLING_RATE = 1
-BATCH_SIZE = 4096
-
-
-print("Building train and validation datasets...")
-# Build timeseries datasets using Keras helpers
-train_dataset = timeseries_dataset_from_array(
-    data=train_set[:-SEQUENCE_LENGTH],
-    targets=train_set[SEQUENCE_LENGTH:],
-    sampling_rate=SAMPLING_RATE,
-    sequence_length=SEQUENCE_LENGTH,
-    batch_size=BATCH_SIZE)
-
-validation_dataset = timeseries_dataset_from_array(
-    data=validation_set[:-SEQUENCE_LENGTH],
-    targets=validation_set[SEQUENCE_LENGTH:],
-    sampling_rate=SAMPLING_RATE,
-    sequence_length=SEQUENCE_LENGTH,
-    batch_size=BATCH_SIZE)
+print("Loading validation dataset...")
+validation_dataset = tf.data.Dataset.load(VALIDATION_DATASET_PATH, compression="GZIP")
 
 # Build the model, with LSTM layers for handling the timeseries data
 # and Dropout layers to help reduce overfitting
