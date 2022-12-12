@@ -119,7 +119,7 @@ class LanguageModel:
                 if self.n > 1:
                     current_prefix = current_prefix[1:] + (predicted_token,)
 
-            if len(poem) >= max_words:
+            if len(poem.split()) >= max_words:
                 return poem
 
     def sample_token_given_prefix(self, prefix):
