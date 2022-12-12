@@ -9,7 +9,7 @@ from models.ngram_language_model import LanguageModel
 
 
 class TestModelTraining:
-    def test_train_iamsam(self):
+    def test_train(self):
         bigram_model = LanguageModel(2, False, replacement_threshold=1)
         expected_ngram_frequencies = {
             ("<p>", "one"): 1, 
