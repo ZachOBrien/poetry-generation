@@ -8,47 +8,82 @@ Fall 2022
 
 ## Set up Environment
 
-This project's dependencies are specified in a **conda environment file**. To run the code in this repository, conda must be installed on your machine. See here for installation instructions: https://conda.io/projects/conda/en/latest/glossary.html#miniconda-glossary.
+This project's dependencies are specified in a `requirements.txt` file, for use with Python's built-in `venv` virtual environment tool. 
 
-Once conda is installed on your machine, continue by creating a new environment for this project with the following commands.
+**This project uses Python version 3.9.10. You can attempt to install the packages and run the code with a different version of Python and it might work, but using version 3.9.10 is probably best**.
 
-```shell
-# Create the new conda environment
-conda env create -f environment.yml
-```
+1. Install Python version 3.9.10, and use that version for the following steps
+    <br />
 
-```shell
-# Show a list of conda environments to confirm that `4120-fp` is one of them
-conda env list
-```
+2. Create a new virtual environment for this project
 
-```shell
-# Activate the environment for your current shell
-conda activate 4120-fp
-```
+    ```console
+    python3 -m venv 4120_fp_obrien
+    ```
+    <br />
+    
+3. Activate the virtual environment
 
-Once the conda environment is set up, activate it and install the python source code for this project as a local, editable package. This **must** be done, or absolute imports will break and the code will not run.
+    ```console
+    # On windows:
+    4120_fp_obrien\Scripts\activate.bat
+    ```
+     <br />
+    
+    ```console
+    # On Unix or MaxOS:
+    source 4120_fp_obrien/bin/activate
+    ```
+     <br />
+    
+4. Install dependencies
 
-```shell
-# In src/ directory, with conda environment activated
-(4120-fp) python -m pip install -e .
-```
+    ```console
+    # With the 4120_fp_obrien virtual environment activated:
+    python -m pip install -r requirements.txt
+    ```
+     <br />
 
-Verify that the package was installed by finding it with `conda list`
+5. Install this project's modular source code. **This step is CRITICAL**. If skipped, imports will not work.
 
-```shell
-> (4120-fp) conda list
-...
-src     0.1.0     dev_0    <develop>
-...
-# Your version number will likely be different. That's not a problem.
-```
+    ```console
+    # With the 4120_fp_obrien virtual environment activated:
+    cd src/
 
+    # Now, in src/ directory:
+    python -m pip install -e .
+    ```
+     <br />
+    
+6. Verify the installation was succesful by running the unit test suite
 
-## Run Unit Tests
+    ```console
+    # In top-level project directory
+    python -m pytest test/
+    ```
+    <br />
+
+    **Steps 7 and 8 are only required if you wish to run the final submission Jupyter Lab Notebook**
+
+7. Create an `ipykernel` kernel so that the jupyter notebook can access the virtual environment
+
+    ```console
+    # With the 4120_fp_obrien virtual environment activated:
+    python -m ipykernel install --user --name=4120_fp_obrien
+    ```
+    <br />
+
+8. Open Jupyter Lab and navigate to `FINAL-PROJECT-DELIVERABLE.ipynb` 
+
+    ```console
+    # With the 4120_fp_obrien virtual environment activated:
+    jupyter-lab
+    ```
+
+## How to Run Unit Tests
 
 First, activate the `4120-fp` conda environment. Then:
 
 ```shell
-./run-unit-tests.sh
+python -m pytest test/
 ```
