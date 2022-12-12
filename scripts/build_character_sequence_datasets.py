@@ -11,7 +11,7 @@ from keras.utils import timeseries_dataset_from_array
 import pandas as pd
 import numpy as np
 
-from dataprep.neural_lm_preprocessing import (
+from dataprep.neural_lm_dataprep import (
     Vectorizer,
     preprocess_for_neural_lm,
 )
