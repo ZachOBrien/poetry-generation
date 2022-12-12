@@ -12,19 +12,20 @@ import numpy as np
 
 class LanguageModel:
     UNK = "<UNK>"
-    REPLACEMENT_THRESHOLD = 2
     POEM_BEGIN = "<p>"
     POEM_END = "</p>"
 
-    def __init__(self, n, is_laplace_smoothing):
+    def __init__(self, n, is_laplace_smoothing, replacement_threshold=2):
         """Initializes an untrained LanguageModel
 
         Parameters:
             n_gram (int): the n-gram order of the language model to create
             is_laplace_smoothing (bool): whether or not to use Laplace smoothing
+            replacement_threshold (int): how many times a token must appear to be kept
         """
         self.n = n
         self.is_laplace_smoothing = is_laplace_smoothing
+        self.replacement_threshold = replacement_threshold
         self.token_frequency_distribution = None
         self.n_gram_frequencies = None
         self.vocabulary = None
@@ -44,7 +45,7 @@ class LanguageModel:
         tokens = replace_infrequent_tokens(
             tokens,
             self.token_frequency_distribution,
-            threshold=self.REPLACEMENT_THRESHOLD,
+            threshold=self.replacement_threshold,
             replacement_token=self.UNK,
         )
         self.vocabulary = set(tokens)
@@ -64,7 +65,7 @@ class LanguageModel:
         tokens = replace_infrequent_tokens(
             tokens,
             self.token_frequency_distribution,
-            threshold=self.REPLACEMENT_THRESHOLD,
+            threshold=self.replacement_threshold,
             replacement_token=self.UNK,
         )
         n_grams = ngrams(tokens, self.n)
