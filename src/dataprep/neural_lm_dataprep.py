@@ -157,4 +157,11 @@ def postprocess_for_neural_lm(poem):
         str: The poem, postprocessed
     """
     # Replace 2 or more whitespace with a single whitespace
-    return re.sub(" +", " ", poem)
+    double_whitespace = " +"
+    # Replace start and end symbols with empty string
+    segmenting_symbols = "@|\$"
+    poem = re.sub(double_whitespace, " ", poem)
+    poem = re.sub(segmenting_symbols, "", poem)
+    poem = poem.strip()
+    return poem
+    
