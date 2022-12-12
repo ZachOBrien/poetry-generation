@@ -9,8 +9,6 @@ import random
 from nltk.util import ngrams
 import numpy as np
 
-from dataprep.ngram_lm_preprocessing import preprocess_for_ngram_lm
-
 
 class LanguageModel:
     UNK = "<UNK>"
@@ -98,8 +96,11 @@ class LanguageModel:
         with np.errstate(divide="ignore"):
             return np.log(ngram_freq / ngram_prefix_freq)
 
-    def generate_poem(self):
+    def generate_poem(self, max_words):
         """Generates a single poem from a trained language model using the Shannon technique.
+
+        Parameters:
+            max_words (int): Maximum number of words in the poem
 
         Returns:
           str: the generated poem
@@ -117,6 +118,9 @@ class LanguageModel:
                 poem += (" " + predicted_token)
                 if self.n > 1:
                     current_prefix = current_prefix[1:] + (predicted_token,)
+
+            if len(poem) >= max_words:
+                return poem
 
     def sample_token_given_prefix(self, prefix):
         """Samples a token given some prefix sequence of tokens
