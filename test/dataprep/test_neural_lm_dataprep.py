@@ -7,7 +7,7 @@ import pytest
 import numpy as np
 
 
-from dataprep.neural_lm_preprocessing import (
+from dataprep.neural_lm_dataprep import (
     Vectorizer,
     _lowercase_and_wrap_with_markers,
     _split_into_characters,
