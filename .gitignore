@@ -5,3 +5,5 @@ __pycache__
 *.egg-info
 
 4120_fp_obrien/
+
+env/

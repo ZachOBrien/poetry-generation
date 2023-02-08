@@ -25,33 +25,33 @@ This project's dependencies are specified in a `requirements.txt` file, intended
 
 2. Create a new virtual environment for this project
 
-    ```console
-    python3 -m venv poetry-generation
+    ```
+    python3 -m venv env
     ```
 
 3. Activate the virtual environment
 
-    ```console
+    ```
     # On windows:
-    poetry-generation\Scripts\activate.bat
+    env\Scripts\activate.bat
     ```
     
-    ```console
+    ```
     # On Unix or MaxOS:
-    source poetry-generation/bin/activate
+    source env/bin/activate
     ```
     
 4. Install dependencies
 
-    ```console
-    # With the poetry-generation virtual environment activated:
+    ```
+    # With the env virtual environment activated:
     python -m pip install -r requirements.txt
     ```
 
 5. Install this project's modular source code. **This step is CRITICAL**. If skipped, imports will not work.
 
-    ```console
-    # With the poetry-generation virtual environment activated:
+    ```
+    # With the env virtual environment activated:
     cd src/
 
     # Now, in src/ directory:
@@ -60,7 +60,7 @@ This project's dependencies are specified in a `requirements.txt` file, intended
     
 6. Verify the installation was succesful by running the unit test suite
 
-    ```console
+    ```
     # In top-level project directory
     python -m pytest test/
     ```
@@ -69,21 +69,21 @@ This project's dependencies are specified in a `requirements.txt` file, intended
 
 7. Create an `ipykernel` kernel so that the jupyter notebook can access the virtual environment
 
-    ```console
-    # With the poetry-generation virtual environment activated:
-    python -m ipykernel install --user --name=poetry-generation
+    ```
+    # With the env virtual environment activated:
+    python -m ipykernel install --user --name=env
     ```
 
-8. Open Jupyter Lab and navigate to `poetry-generation.ipynb` 
+8. Open Jupyter Lab and navigate to `env.ipynb` 
 
-    ```console
-    # With the poetry-generation virtual environment activated:
+    ```
+    # With the env virtual environment activated:
     jupyter-lab
     ```
 
 ## How to Run Unit Test Suite
 
-First, activate the `poetry-generation` virtual environment. Then:
+First, activate the `env` virtual environment. Then:
 
 ```shell
 python -m pytest test/
