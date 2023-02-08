@@ -17,7 +17,7 @@ December 2022
 
 ## Set up Environment
 
-This project's dependencies are specified in a `requirements.txt` file, intended for use with Python's built-in `venv` virtual environment tool. 
+This project's dependencies are specified in a `requirements.txt` (and `requirements-apple-silicon.txt`) file, intended for use with Python's built-in `venv` virtual environment tool. 
 
 **This project uses Python version 3.9.10. You can attempt to install the packages and run the code with a different version of Python and it might work, but using version 3.9.10 is probably best**.
 
@@ -43,12 +43,28 @@ This project's dependencies are specified in a `requirements.txt` file, intended
     
 4. Install dependencies
 
+    On Apple silicon:
+    ```
+    # With the env virtual environment activated:
+    python -m pip install -r requirements-apple-silicon.txt
+    ```
+
+    On all other platforms, including intel-based macs:
     ```
     # With the env virtual environment activated:
     python -m pip install -r requirements.txt
     ```
 
-5. Install this project's modular source code. **This step is CRITICAL**. If skipped, imports will not work.
+5. Install prerequisite Natural Language Toolkit (NLTK) data
+
+    ```
+    # With the env virtual environment activated:
+    python
+    >>> import nltk
+    >>> nltk.download("punkt")
+    ```
+
+6. Install this project's modular source code. **This step is CRITICAL**. If skipped, imports will not work.
 
     ```
     # With the env virtual environment activated:
@@ -58,7 +74,7 @@ This project's dependencies are specified in a `requirements.txt` file, intended
     python -m pip install -e .
     ```
     
-6. Verify the installation was succesful by running the unit test suite
+7. Verify the installation was succesful by running the unit test suite
 
     ```
     # In top-level project directory
@@ -67,14 +83,14 @@ This project's dependencies are specified in a `requirements.txt` file, intended
 
     **Steps 7 and 8 are only required if you wish to run the Jupyter Notebook**
 
-7. Create an `ipykernel` kernel so that the jupyter notebook can access the virtual environment
+8. Create an `ipykernel` kernel so that the jupyter notebook can access the virtual environment
 
     ```
     # With the env virtual environment activated:
     python -m ipykernel install --user --name=env
     ```
 
-8. Open Jupyter Lab and navigate to `env.ipynb` 
+9. Open Jupyter Lab and navigate to `env.ipynb` 
 
     ```
     # With the env virtual environment activated:
