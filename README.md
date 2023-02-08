@@ -61,9 +61,7 @@ This project's dependencies are specified in a `requirements.txt` (and `requirem
 
     ```
     # With the env virtual environment activated:
-    python
-    >>> import nltk
-    >>> nltk.download("punkt")
+    python -m nltk.downloader punkt
     ```
 
 6. Install this project's modular source code. **This step is CRITICAL**. If skipped, imports will not work.
