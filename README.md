@@ -1,5 +1,7 @@
 # Poetry Generation
 
+[![Python 3.9.10](https://img.shields.io/badge/python-3.9.10-blue.svg)](https://www.python.org/downloads/release/python-3910/)
+
 Zach O'Brien
 
 December 2022
