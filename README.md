@@ -4,7 +4,12 @@
 
 Zach O'Brien
 
-December 2022
+## About
+
+The objective of this project is to generate new poetry based on Walt Whitman's [*Leaves of Grass*](https://www.gutenberg.org/ebooks/1322). To do so, two types of language models are used:
+
+- N-gram (2 and 3 gram) language models
+- LSTM character-based language model
 
 ## Project Structure
 
@@ -57,14 +62,14 @@ This project's dependencies are specified in a `requirements.txt` (and `requirem
     python -m pip install -r requirements.txt
     ```
 
-5. Install prerequisite Natural Language Toolkit (NLTK) data
+5. Install prerequisite Natural Language Toolkit (NLTK) data. **Note that this will create a new directory `nltk_data/` in your home directory (on Linux and MacOS) in which to insall the data.**
 
     ```
     # With the env virtual environment activated:
     python -m nltk.downloader punkt
     ```
 
-6. Install this project's modular source code. **This step is CRITICAL**. If skipped, imports will not work.
+6. Install this project's modular source code. **This step is critical**. If skipped, imports will not work.
 
     ```
     # With the env virtual environment activated:
